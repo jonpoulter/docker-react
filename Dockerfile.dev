@@ -1,0 +1,16 @@
+FROM node:alpine
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+#Leave this instruction in but not required for docker-compose.
+COPY . .
+
+CMD ["npm", "run", "start"]
+
+#run using external volume flags to allow dynamic changes to source code.
+# /app/node_modules dependency is only available on docker image.
+#docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app <image_id>
